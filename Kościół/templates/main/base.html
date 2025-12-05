@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kościół Chwały{% endblock %}</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <header>
+        <div class="logo">Kościół Chwały<span class="dot">.</span></div>
+        
+        <nav class="navbar">
+            <ul>
+                <li><a href="{% url 'Cosciol:index' %}" class="active">Главная</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#events">Events</a></li> 
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>  
+
+        <div class="header-buttons">
+            <a href="#contact" class="btn-talk">Свяжитесь</a>
+            
+            <div class="burger-menu" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
+        
+        <div class="sidebar-content">
+            
+            <div class="user-greeting">Меню</div>
+            
+            <a href="#">
+                <i class="fa-solid fa-user-plus"></i> Регистрация
+            </a>
+            
+            <a href="#">
+                <i class="fa-solid fa-right-to-bracket"></i> Войти
+            </a>
+
+        </div>
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+    <script>
+        function toggleMenu() {
+            var sidebar = document.getElementById("mySidebar");
+            // Ширина 200px, как мы договаривались для телефона
+            if (sidebar.style.width === "230px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "230px";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,884 @@
+/* Обнуление стилей и переменные */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+    outline: none;
+}
+
+:root {
+    --bg-color: #0b0b0b;       
+    --text-color: #ffffff;    
+    --text-gray: #a0a0a0;      
+    --main-color: #00d2ff;     
+    --nav-bg: #1f1f1f;         
+    --card-bg: #1f1f1f;
+    --input-bg: #111;
+    --border-color: #333;
+    --font-main: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+}
+
+/* --- HEADER --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    z-index: 100;
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.logo .dot {
+    color: var(--main-color);
+}
+
+.navbar {
+    background: var(--nav-bg);
+    padding: 10px 30px;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+}
+
+.navbar ul {
+    display: flex;
+    gap: 30px;
+}
+
+.navbar a {
+    color: var(--text-gray);
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.navbar a:hover, .navbar a.active {
+    color: var(--text-color);
+}
+
+.navbar a.active {
+    background: var(--main-color);
+    color: #000;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.btn-talk {
+    background: var(--main-color);
+    color: #000;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+.btn-talk:hover {
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+}
+
+/* --- COMMON STYLES --- */
+.section-title {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+.section-title .highlight {
+    color: var(--main-color);
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    min-height: 100vh;
+    padding: 0 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    padding-top: 80px;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.church-title {
+    font-size: 70px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.address-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 20px;
+    color: var(--text-gray);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    width: fit-content;
+    backdrop-filter: blur(5px);
+}
+
+.address-box i {
+    font-size: 24px;
+}
+
+.cta-group {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 30;
+    margin-bottom: 40px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    width: 45px;
+    height: 45px;
+    background: var(--nav-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: var(--text-gray);
+    transition: 0.3s;
+    border: 1px solid var(--border-color);
+    font-size: 19px;
+}
+
+.social-icons a:hover {
+    background: var(--main-color);
+    color: #000;
+    transform: translateY(-3px);
+}
+
+.hero-image-container {
+    position: relative;
+    width: 750px;
+    height: 500px;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0, 210, 255, 0.1); 
+    border: 1px solid var(--border-color);
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(60%) brightness(0.9); 
+    transition: 0.5s;
+}
+
+.image-wrapper:hover img {
+    filter: grayscale(0%) brightness(1);
+    
+}
+
+.floating-badge {
+    position: absolute;
+    background: rgba(30, 30, 30, 0.9);
+    backdrop-filter: blur(5px);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 1px solid #444;
+    color: var(--text-color);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.floating-badge i {
+    color: var(--main-color);
+}
+
+.badge-1 { top: 40px; right: -30px; }
+.badge-2 { bottom: 60px; left: -40px; }
+.badge-3 { bottom: 400px; left: -70px; }
+.badge-4 { bottom: 470px; left: 250px; }
+
+
+/* --- ABOUT SECTION --- */
+.about {
+    padding: 80px 8%;
+    background: #0e0e0e;
+}
+
+.about-text-box {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.about-text-box p {
+    color: var(--text-gray);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.about-text-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- EVENTS SECTION --- */
+.events {
+    padding: 80px 8%;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 30px; 
+}
+
+.event-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: 0.4s;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--main-color);
+    box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2);
+}
+
+.card-image {
+    width: 100%;
+    height: 300px; 
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.4s;
+}
+
+.event-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.event-card h3 {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* --- CONTACT SECTION --- */
+.contact-section {
+    padding: 80px 8%;
+    background: var(--bg-color);
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* 1 часть слева, 1.5 части справа */
+    gap: 50px;
+}
+
+/* Левая колонка */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.info-box {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: 0.3s;
+}
+
+.info-box:hover {
+    border-color: var(--main-color);
+    transform: translateY(-5px);
+}
+
+.icon-box {
+    width: 60px;
+    height: 60px;
+    background: var(--main-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #000;
+    flex-shrink: 0;
+}
+
+.info-text h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.info-text p {
+    color: var(--text-gray);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.info-text a {
+    color: var(--main-color);
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.info-text a:hover {
+    text-decoration: underline;
+}
+
+/* Правая колонка */
+.contact-form {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.input-box {
+    margin-bottom: 20px;
+}
+
+.input-box input,
+.input-box textarea {
+    width: 100%;
+    padding: 15px 20px;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-family: var(--font-main);
+    transition: 0.3s;
+}
+
+.input-box textarea {
+    resize: none;
+    height: 150px;
+}
+
+.input-box input:focus,
+.input-box textarea:focus {
+    border-color: var(--main-color);
+}
+
+.btn-submit {
+    background: var(--main-color);
+    color: #000;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-submit:hover {
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+    transform: translateY(-3px);
+}
+
+/* --- FOOTER / SCHEDULE --- */
+footer {
+    background: #050505;
+    padding: 60px 8% 30px;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.schedule-box {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--card-bg);
+    padding: 20px 40px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    min-width: 300px;
+}
+
+.schedule-item i {
+    font-size: 30px;
+}
+
+.schedule-item h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.schedule-item p {
+    color: var(--text-gray);
+    font-size: 16px;
+}
+
+.copyright {
+    color: #555;
+    font-size: 14px;
+    margin-top: 50px;
+}
+
+/* --- АДАПТИВ (ДЛЯ ТЕЛЕФОНОВ) --- */
+
+/* Планшеты и ниже (1000px) */
+@media (max-width: 1000px) {
+    header { padding: 15px 4%; }
+    .navbar { display: none; }
+    .hero { flex-direction: column; text-align: center; padding-top: 130px; gap: 30px;}
+    .hero-content { align-items: center; }
+    .cta-group { align-items: center; }
+    .hero-image-container { width: 100%; max-width: 350px; height: 400px; }
+    .badge-1 { right: 0; }
+    .badge-2 { left: 0; }
+    .cards-container { grid-template-columns: repeat(2, 1fr); }
+    
+    /* ИСПРАВЛЕНИЕ КОНТАКТОВ: делаем одну колонку */
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+/* Мобильные (600px) */
+@media (max-width: 600px) {
+    .cards-container { grid-template-columns: 1fr; }
+    .card-image { height: 250px; } 
+    
+    .church-title { font-size: 40px; }
+    .address-box { font-size: 16px; padding: 10px 15px; margin: 0 auto; }
+    
+    .schedule-box { gap: 20px; }
+    .schedule-item { width: 100%; min-width: auto; justify-content: flex-start;}
+
+    .contact-form { padding: 25px; }
+}
+
+/* --- ГАЛЕРЕЯ (БЕГУЩАЯ СТРОКА) --- */
+.gallery-section {
+    padding: 50px 0; /* Отступы сверху и снизу */
+    background: var(--bg-color);
+    overflow: hidden; /* Скрываем всё, что вылезает за экран */
+}
+
+.marquee-container {
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 20px; /* Расстояние между верхней и нижней полосой */
+    position: relative;
+}
+
+/* Трек, который двигается */
+.marquee-track {
+    display: flex;
+    gap: 20px; /* Расстояние между картинками */
+    width: max-content; /* Ширина по содержимому */
+}
+
+/* Стиль самих картинок */
+.gallery-item {
+    width: 300px; /* Ширина картинки */
+    height: 200px; /* Высота картинки */
+    border-radius: 15px;
+    overflow: hidden;
+    flex-shrink: 0; /* Чтобы картинки не сплющивались */
+    border: 1px solid #333;
+    position: relative;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s;
+    filter: grayscale(30%); /* Чуть приглушим цвета для стиля */
+}
+
+.gallery-item:hover img {
+    filter: grayscale(0%); /* При наведении цвет возвращается */
+    transform: scale(1.1);
+}
+
+/* --- АНИМАЦИИ --- */
+
+/* Класс для движения ВЛЕВО */
+.scroll-left {
+    animation: scrollLeft 50s linear infinite;
+}
+
+/* Класс для движения ВПРАВО */
+.scroll-right {
+    animation: scrollRight 50s linear infinite;
+}
+
+/* Логика движения влево */
+@keyframes scrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Сдвигаем на половину (так как у нас дубликаты) */
+    }
+}
+
+/* Логика движения вправо */
+@keyframes scrollRight {
+    0% {
+        transform: translateX(-50%); /* Начинаем со сдвига */
+    }
+    100% {
+        transform: translateX(0); /* Едем к началу */
+    }
+}
+
+/* Адаптив для телефонов (картинки чуть меньше) */
+@media (max-width: 600px) {
+    .gallery-item {
+        width: 200px;
+        height: 140px;
+    }
+}
+/* --- СТИЛИ ДЛЯ ГРУППЫ КНОПОК --- */
+
+/* Контейнер, чтобы кнопки стояли в ряд */
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Расстояние между кнопками */
+}
+
+/* Стиль для кнопки "Войти" (Второй стиль: прозрачная с рамкой) */
+.btn-login {
+    background: transparent;
+    color: var(--text-color);
+    padding: 8px 20px; /* Чуть меньше паддинг, чтобы аккуратно смотрелось */
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: 0.3s;
+    border: 2px solid var(--main-color); /* Голубая рамка */
+    
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    background: var(--main-color);
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+}
+
+/* Стиль для кнопки "Регистрация" (оставляем как было, но убедимся, что btn-talk не ломает верстку) */
+.btn-talk {
+    /* Если у вас там стоял width: fit-content, все ок. Если нет - добавьте. */
+    white-space: nowrap; /* Чтобы текст не переносился */
+}
+
+/* --- АДАПТИВ (ЧТОБЫ НА ТЕЛЕФОНЕ ВЛЕЗЛО) --- */
+@media (max-width: 500px) {
+    .header-buttons {
+        gap: 10px;
+    }
+    
+    .btn-talk, .btn-login {
+        padding: 8px 15px; /* Чуть уменьшим кнопки на телефоне */
+        font-size: 12px;
+    }
+    
+    /* Можно убрать текст "Войти" на совсем маленьких экранах и оставить только иконку */
+    /* .btn-login span { display: none; } - если захотите */
+}
+
+/* Стили для боковой панели */
+.sidebar {
+    height: 100%;
+    width: 0; /* Скрыта по умолчанию */
+    position: fixed;
+    z-index: 1000; /* Чтобы была поверх всего */
+    top: 0;
+    right: 0;
+    background-color: #111; /* Темный фон как у сайта */
+    overflow-x: hidden;
+    transition: 0.4s; /* Плавность анимации */
+    padding-top: 60px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5); /* Тень слева */
+    border-left: 1px solid #333;
+}
+
+/* Ссылки внутри меню */
+.sidebar a {
+    padding: 10px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+    background-color: #222;
+    border-left: 3px solid #00d2ff; /* Синяя полоска при наведении */
+}
+
+
+
+
+
+
+
+
+/* =========================================
+   ЛЕГКИЕ СТИЛИ ДЛЯ МЕНЮ (LITE)
+   ========================================= */
+
+/* Иконка меню (Гамбургер) */
+.burger-menu {
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    padding: 10px; /* Чуть больше область нажатия */
+    transition: 0.2s;
+}
+
+.burger-menu:hover {
+    color: #00d2ff; /* Голубой при наведении */
+}
+
+/* Сама панель */
+.sidebar {
+    height: 100%;
+    width: 0; /* Скрыто */
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    
+    /* --- ПРОЗРАЧНОСТЬ И ФОН --- */
+    background-color: rgba(15, 15, 15, 0.8); /* 0.95 = почти непрозрачный, легкий эффект */
+    backdrop-filter: blur(4px); /* Размытие фона под меню (матовое стекло) */
+    
+    overflow-x: hidden;
+    transition: 0.3s; /* Плавный выезд */
+    padding-top: 60px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5); /* Мягкая тень */
+}
+
+/* Контейнер ссылок */
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+/* Ссылки (пункты меню) */
+.sidebar a {
+    padding: 12px 15px;
+    text-decoration: none;
+    font-size: 15px; /* Аккуратный шрифт */
+    color: #ccc; /* Светло-серый текст */
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Отступ иконки от текста */
+    transition: 0.2s;
+    border-radius: 6px; /* Скругленные углы */
+    margin-bottom: 4px;
+    white-space: nowrap; /* Текст в одну строку */
+}
+
+/* Наведение на ссылку */
+.sidebar a:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1); /* Еле заметная подсветка фона */
+}
+
+/* Заголовок "Меню" */
+.user-greeting {
+    color: #666; /* Темно-серый, чтобы не отвлекал */
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+}
+
+/* Кнопка закрыть (крестик) */
+.sidebar .closebtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    color: #888;
+    background: none;
+    padding: 0;
+    justify-content: center; /* Центруем крестик, если он съехал */
+}
+
+.sidebar .closebtn:hover {
+    background: none;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+/* =========================================
+   МОБИЛЬНАЯ ВЕРСИЯ: КАРТИНКА КАК ФОН
+   ========================================= */
+@media (max-width: 1000px) {
+    
+    /* 1. Настраиваем главную секцию (Hero) */
+    .hero {
+        position: relative; /* Делаем секцию "коробкой", внутри которой все позиционируется */
+        display: flex;
+        align-items: center; /* Центрируем текст по вертикали */
+        justify-content: center;
+        min-height: 100vh; /* Высота на весь экран телефона */
+        padding: 0 20px; /* Небольшие отступы по бокам */
+        overflow: hidden; /* Обрезаем все лишнее */
+    }
+
+    /* 2. Превращаем блок с картинкой в ФОН */
+    .hero-image-container {
+        position: absolute; /* Вынимаем из потока */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 35vh !important; /* Растягиваем на всю высоту */
+        margin: 0;
+        max-width: none; /* Убираем ограничения ширины */
+        z-index: 1; /* Кладем на задний план */
+    }
+
+    .image-wrapper {
+        border-radius: 0; /* Убираем скругления */
+        height: 100%;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+    }
+
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Заполняем весь экран картинкой */
+        
+        /* ВАЖНО: Затемняем фото, чтобы белый текст был виден! */
+        /* Чем меньше цифра, тем темнее фото (0.3 - оптимально) */
+        filter: brightness(0.3); 
+    }
+
+    /* 3. Настраиваем ТЕКСТ (чтобы лежал поверх картинки) */
+    .hero-content {
+        position: relative;
+        z-index: 2; /* Кладем на передний план */
+        text-align: center; /* Центрируем текст */
+        width: 100%;
+        padding-top: 0px; /* Отступ сверху, чтобы не прилипало к шапке */
+    }
+
+    /* Увеличиваем заголовок для эффекта */
+    .church-title {
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+
+    /* Центрируем адрес */
+    .address-box {
+        margin: 85px auto 60px auto;
+        background: rgba(255, 255, 255, 0.1); /* Прозрачный фон для адреса */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Центрируем кнопки соцсетей */
+    .social-icons {
+        justify-content: center;
+    }
+    
+    .cta-group {
+        align-items: center;
+    }
+
+    /* Скрываем летающие плашки (Любовь/Поддержка), они будут мешать на фоне */
+    .floating-badge {
+        display: none;
+    }
+}
