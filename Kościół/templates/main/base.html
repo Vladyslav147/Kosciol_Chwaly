@@ -41,18 +41,35 @@
         <div class="sidebar-content">
             
             <div class="user-greeting">Меню</div>
-            
-            <a href="#">
-                <i class="fa-solid fa-user-plus"></i> Регистрация
-            </a>
-            
-            <a href="#">
-                <i class="fa-solid fa-right-to-bracket"></i> Войти
-            </a>
 
+
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <h3 class="Hello">
+                        Приветствую <br> <span class="user-name">{{ user.username }}</span>
+                    </h3>
+                    <a href="{% url 'Cosciol:logout'%}" class="mobile-active">
+                        <i class="fa-solid fa-right-to-bracket"></i> Выйти
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'Cosciol:logins'%}">
+                    <i class="fa-solid fa-right-to-bracket"></i> Войти
+                </a>
+            {% endif %}
         </div>
-    </div>
 
+        {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <a href="{% url 'Cosciol:adminPanel'%}" class="mu">
+                    <div class="admin">
+                        <i class="fa-solid fa-user-gear"></i> Админ Панель
+                    </div>
+                </a>
+            {% endif %}
+        {% endif %}
+        
+    </div>
     {% block body %}
     {% endblock %}
 

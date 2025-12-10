@@ -669,6 +669,10 @@ footer {
     z-index: 1000; /* Чтобы была поверх всего */
     top: 0;
     right: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     background-color: #111; /* Темный фон как у сайта */
     overflow-x: hidden;
     transition: 0.4s; /* Плавность анимации */
@@ -729,7 +733,7 @@ footer {
     
     /* --- ПРОЗРАЧНОСТЬ И ФОН --- */
     background-color: rgba(15, 15, 15, 0.8); /* 0.95 = почти непрозрачный, легкий эффект */
-    backdrop-filter: blur(4px); /* Размытие фона под меню (матовое стекло) */
+    backdrop-filter: blur(7px); /* Размытие фона под меню (матовое стекло) */
     
     overflow-x: hidden;
     transition: 0.3s; /* Плавный выезд */
@@ -740,8 +744,10 @@ footer {
 /* Контейнер ссылок */
 .sidebar-content {
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     padding: 0 10px;
+    overflow-y: auto;
 }
 
 /* Ссылки (пункты меню) */
@@ -755,7 +761,7 @@ footer {
     gap: 12px; /* Отступ иконки от текста */
     transition: 0.2s;
     border-radius: 6px; /* Скругленные углы */
-    margin-bottom: 4px;
+    margin-bottom: 10px;
     white-space: nowrap; /* Текст в одну строку */
 }
 
@@ -768,11 +774,12 @@ footer {
 /* Заголовок "Меню" */
 .user-greeting {
     color: #666; /* Темно-серый, чтобы не отвлекал */
-    font-size: 14px;
+    font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 10px;
     padding-left: 15px;
+    font-weight: 700;
 }
 
 /* Кнопка закрыть (крестик) */
@@ -793,11 +800,46 @@ footer {
 }
 
 
+/* === Стиль для приветствия (Admin) === */
+.sidebar .Hello {
+    color: #888; /* Тусклый цвет для приветствия */
+    font-size: 15px;
+    text-align: center;
+    margin: 20px 0;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.sidebar .Hello .user-name {
+    color: #ffd700; /* Яркий золотой */
+    font-weight: bold;
+    margin-left: 5px; /* Отступ от запятой */
+}
+
+.admin {
+
+
+    /* Пример красоты, чтобы выделить, что это админка */
+    background-color: #eef2f5; /* легкий фон */
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #333;
+    display: flex;       /* Чтобы иконка и текст встали ровно */
+    align-items: center; /* Центровка по вертикали */
+    gap: 10px;           /* Отступ между иконкой и текстом */
+}
 
 
 
-
-
+.mu {
+    /* Запрещаем кнопке сжиматься */
+    flex-shrink: 0; 
+    
+    /* Небольшой отступ снизу для красоты */
+    padding-bottom: 20px; 
+    width: 100%;
+}
 
 
 /* =========================================
@@ -881,4 +923,21 @@ footer {
     .floating-badge {
         display: none;
     }
+}
+
+
+/* === ПОДСВЕТКА КНОПКИ НА ТЕЛЕФОНЕ (УСИЛЕННАЯ) === */
+@media (max-width: 768px) {
+    
+    /* Обращаемся более точно: .sidebar-content a.mobile-active */
+    .sidebar-content a.mobile-active {
+        background-color: #222 !important;         /* Принудительно серый фон */
+        color: #ffffff !important;                 /* Принудительно белый текст */
+        border-left: 4px solid #00d2ff !important; /* Принудительно синяя полоска */
+        
+        /* Выравниваем текст, чтобы он не прилипал к полоске */
+        /* (30px стандартный отступ - 4px полоска = 26px) */
+        padding-left: 26px !important; 
+    }
+
 }

@@ -7,7 +7,7 @@
     Kościół Chwały | Kielce
 {% endblock title %}
 
-
+ 
 {% block extra_css %}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -108,33 +108,34 @@
         
         <div class="marquee-container">
             <div class="marquee-track scroll-left">
-                <div class="gallery-item"><img src="kvartirnik.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="molodezhka.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="sluzhenie.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="conference.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="kvartirnik.jpg" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/Bible.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/hall2.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/konf2.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/Kvartinrik.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/Kvartinrik2.jpg' %}" alt="Foto"></div>
                 
-                <div class="gallery-item"><img src="kvartirnik.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="molodezhka.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="sluzhenie.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="conference.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="kvartirnik.jpg" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/photo2.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/photo3.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/photo4.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/photo5.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/sermon.jpg' %}" alt="Foto"></div>
             </div>
         </div>
 
         <div class="marquee-container">
-            <div class="marquee-track scroll-right">
-                <div class="gallery-item"><img src="vika.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="ya.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="igor.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="marin.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="conference.jpg" alt="Foto"></div>
 
-                <div class="gallery-item"><img src="conference.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="sluzhenie.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="marin.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="kvartirnik.jpg" alt="Foto"></div>
-                <div class="gallery-item"><img src="gir.jpg" alt="Foto"></div>
+            <div class="marquee-track scroll-right">
+                <div class="gallery-item"><img src="{% static 'img/road/youth_team.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/YOUU.jpg' %}" alt="Foto"></div> 
+                <div class="gallery-item"><img src="{% static 'img/road/Kvartinrik3.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/Baza.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/salam.jpg' %}" alt="Foto"></div>
+
+                <div class="gallery-item"><img src="{% static 'img/road/Kvartinrik4.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/youth_team.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/Kvartinrik4.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/Bible.jpg' %}" alt="Foto"></div>
+                <div class="gallery-item"><img src="{% static 'img/road/photo2.jpg' %}" alt="Foto"></div>
             </div>
         </div>
     </section>
@@ -179,21 +180,24 @@
             </div>
 
             <div class="contact-form">
-                <form action="#">
+
+                <form action="{% url 'Cosciol:contact' %}" method="POST">
+                    {% csrf_token %}
                     <div class="input-box">
-                        <input type="text" placeholder="Ваше Имя" required>
+                        <input name="name" type="text" placeholder="Ваше Имя" required>
                     </div>
                     <div class="input-box">
-                        <input type="email" placeholder="Ваш Email" required>
+                        <input name="Email" type="email" placeholder="Ваш Email" required>
                     </div>
                     <div class="input-box">
-                        <input type="text" placeholder="Тема" required>
+                        <input name="Temat" type="text" placeholder="Тема" required>
                     </div>
                     <div class="input-box">
-                        <textarea placeholder="Ваше Сообщение" required></textarea>
+                        <textarea name="messages" placeholder="Ваше Сообщение" required></textarea>
                     </div>
                     <button type="submit" class="btn-submit">Отправить Сообщение <i class="fa-solid fa-paper-plane"></i></button>
                 </form>
+
             </div>
         </div>
     </section>

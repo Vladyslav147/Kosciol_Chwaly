@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+{% load static %} 
+
+
+{% block title %}
+    Вход в систему
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+{% endblock %}
+
+{% block body %}
+    <div class="login-wrapper">
+        <div class="form-box">
+            
+            <div class="form-header">
+                <h2>Вход в <span class="highlight">Аккаунт</span></h2>
+                <p>Введите свои данные для входа</p>
+            </div>
+
+            <form  method="POST"> {% csrf_token %} <!-- Django проверяет её, чтобы убедиться, что письмо пришло именно с твоего сайта, а не от хакера.-->
+
+                {% if messages %} <!--Есть ли письма в ящике?" Если ошибок нет (пользователь просто зашел на сайт) — этот блок кода вообще исчезает.-->
+                    <div style="color: #ff5555; text-align: center; margin-bottom: 15px; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 10px; border: 1px solid #ff5555;">
+                        {% for message in messages %}
+                        <i class="fa-solid fa-triangle-exclamation">{{ message }}</i>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+
+                <div class="input-group">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <input type="text" name = "username" placeholder="Введите имя" required autocomplete="off">
+                </div>
+
+                <div class="input-group">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <input type="password" name="password" placeholder="Введите пароль" required>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    Войти в систему <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                </button>
+
+            </form>
+
+            <div class="form-footer">
+                <a href="{% url 'Cosciol:index'%}" class="back-link">
+                    <i class="fa-solid fa-arrow-left"></i> Вернуться на главную
+                </a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

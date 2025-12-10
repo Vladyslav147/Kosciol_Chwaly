@@ -1,0 +1,60 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/adminPanel.css'%}">
+{% endblock %}
+
+
+{% block body %}
+    <div class="top-bar">
+        Панель администратора
+    </div>
+
+    <div class="editor-container">
+        
+        <div class="editor-header">
+            <h1>Редактирование текстов главной страницы</h1>
+            <p>Внесите изменения в текстовые блоки сайта и нажмите "Сохранить".</p>
+            <br>
+        </div>
+
+        <form action="" method="POST">
+            
+            <div class="form-group">
+                <label for="footer_text">Начальный текст\место-писание из библии</label>
+                <textarea id="bible_text" name="bible_text">Здесь находится большой текст описания компании, который можно редактировать...</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="about_text">Текст блока "О нас"</label>
+                <textarea id="about_text" name="about_text">Здесь находится большой текст описания компании, который можно редактировать...</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="footer_text">Текст в футере (подвал сайта)</label>
+                <input type="text" id="footer_text" name="footer_text" value="© 2024 Все права защищены">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input type="text" id="phone" name="phone" value="+7 (999) 000-00-00">
+            </div>
+
+            <div class="form-group">
+                <label for="footer_text">Время: Субота</label>
+                <input type="text" id="footer_text" name="footer_text" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="footer_text">Время: Воскресенье</label>
+                <input type="text" id="footer_text" name="footer_text" value="">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">Сохранить изменения</button>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}
