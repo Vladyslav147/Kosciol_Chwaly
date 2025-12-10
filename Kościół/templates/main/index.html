@@ -162,8 +162,8 @@
                     </div>
                     <div class="info-text">
                         <h3>Phone</h3>
-                        <p>+48 123 456 789</p>
-                        <a href="tel:+48123456789">Позвонить нам</a>
+                        <p>{{ info.text_bible }}</p>
+                        <a href="tel:{{ info.phone|cut:' ' }}">Позвонить нам</a>
                     </div>
                 </div>
 

@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="{% static 'css/adminPanel.css'%}">
 {% endblock %}
 
-
 {% block body %}
     <div class="top-bar">
         Панель администратора
@@ -20,35 +19,36 @@
         </div>
 
         <form action="" method="POST">
+            {% csrf_token %}
             
             <div class="form-group">
-                <label for="footer_text">Начальный текст\место-писание из библии</label>
-                <textarea id="bible_text" name="bible_text">Здесь находится большой текст описания компании, который можно редактировать...</textarea>
+                <label for="bible_text">Начальный текст\место-писание из библии</label>
+                <textarea id="bible_text" name="text_bible">{{ form.text_bible.value|default:'' }}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="about_text">Текст блока "О нас"</label>
-                <textarea id="about_text" name="about_text">Здесь находится большой текст описания компании, который можно редактировать...</textarea>
+                <textarea id="about_text" name="text_about">{{ form.text_about.value|default:'' }}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="footer_text">Текст в футере (подвал сайта)</label>
-                <input type="text" id="footer_text" name="footer_text" value="© 2024 Все права защищены">
+                <input type="text" id="footer_text" name="text_footer" value="{{ form.text_footer.value|default:'' }}">
             </div>
 
             <div class="form-group">
                 <label for="phone">Номер телефона</label>
-                <input type="text" id="phone" name="phone" value="+7 (999) 000-00-00">
+                <input type="text" id="phone" name="phone" value="{{ form.phone.value|default:'' }}">
             </div>
 
             <div class="form-group">
-                <label for="footer_text">Время: Субота</label>
-                <input type="text" id="footer_text" name="footer_text" value="">
+                <label for="date_saturday">Время: Субота</label>
+                <input type="text" id="date_saturday" name="date_saturday" value="{{ form.date_saturday.value|default:'' }}">
             </div>
 
             <div class="form-group">
-                <label for="footer_text">Время: Воскресенье</label>
-                <input type="text" id="footer_text" name="footer_text" value="">
+                <label for="date_sunday">Время: Воскресенье</label>
+                <input type="text" id="date_sunday" name="date_sunday" value="{{ form.date_sunday.value|default:'' }}">
             </div>
 
             <div class="form-actions">

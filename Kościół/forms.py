@@ -1,7 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import TextUpdate
 
+class UpdateForm(forms.ModelForm): # Лучше назвать UpdateForm, чтобы было понятно
+    class Meta:
+        model = TextUpdate
+        fields = ['text_bible', 'text_about', 'text_footer', 'phone', 'date_saturday', 'date_sunday']
+
+        
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(
         required=True,

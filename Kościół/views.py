@@ -1,14 +1,16 @@
 import os
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 import requests # для выхода в интернет
 from django.shortcuts import render
 from .forms import UserCreateForm
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect, get_object_or_404 
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 load_dotenv()
 
+from .models import TextUpdate
+from .forms import UpdateForm
 TG_TOKEN = os.getenv('TG_TOKEN')
 TG_CHAT_ID = os.getenv('TG_CHAT_ID')
 
@@ -55,8 +57,17 @@ def contact_view(request):
 
 
 def index(request):
-    return render(request, template_name='main/index.html')
+    # 1. Достаем ту же самую запись, что правим в админке (id=1)
+    # Используем get_or_create, чтобы сайт не сломался, если запись удалят
+    church_info, created = TextUpdate.objects.get_or_create(id=1)
 
+    # 2. Создаем контекст
+    context = {
+        'info': church_info  # Мы назвали переменную 'info'
+    }
+
+    # 3. Передаем контекст в рендер
+    return render(request, 'main/index.html', context)
 
 def logins(request):
     if request.method == 'POST':
@@ -84,9 +95,22 @@ def logout_view(request):
     logout(request)
     return redirect('Cosciol:index')
 
-
+@login_required
 def adminPanel(request):
-    return render(request, template_name='registers/adminPanel.html')
+    # ищем и достаем данные со строки 1
+    obj, created = TextUpdate.objects.get_or_create(id=1)
+
+    if request.method == 'POST':
+        form = UpdateForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect('Cosciol:index')
+    else:
+        form = UpdateForm(instance=obj) #Возьми данные из obj и заполни ими поля формы".
+    context = {
+        'form': form
+    }
+    return render(request, 'registers/adminPanel.html', context)
 
 
 
