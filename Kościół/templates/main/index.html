@@ -27,17 +27,8 @@
             </div>
             
             <p style="margin-top: 20px; max-width: 500px; color: #a0a0a0;">
-                <h1>Исайя 40:28–31</h1>
-                <i>Разве ты не знаешь? Разве ты не слышал, что вечный Господь Бог,
-                сотворивший концы земли, не утомляется и не изнемогает?
-                Разум Его неисследим.
-                Он даёт утомлённому силу,
-                и изнемождённому дарует крепость.
-                Утомляются и юноши, и ослабевают…
-                а надеющиеся на Господа обновят силу:
-                поднимут крылья, как орлы,
-                потекут — и не устанут,
-                пойдут — и не утомятся.</i>
+                
+                <i>{{ info.text_bible }}</i>
             </p>
             
             <div class="cta-group">
@@ -73,10 +64,7 @@
             <h2 class="section-title">About <span class="highlight">Us</span></h2>
             <div class="about-text-box">
                 <p>
-                    Kościół Chwały в городе Kielce — это дом как для взрослых, так и для молодежи. Здесь ты найдешь себя, найдешь Бога и познаешь Его безусловную любовь.
-                </p>
-                <p>
-                    Мы верим, что здесь ты будешь продвигаться, смело идти вперед и раскрывать свой потенциал. В нашей церкви ты всегда найдешь хорошее общение, искренних друзей и поддержку в любой ситуации. Мы ждем тебя!
+                    {{ info.text_about }}
                 </p>
             </div>
         </div>
@@ -162,7 +150,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Phone</h3>
-                        <p>{{ info.text_bible }}</p>
+                        <p>{{ info.phone }}</p>
                         <a href="tel:{{ info.phone|cut:' ' }}">Позвонить нам</a>
                     </div>
                 </div>
@@ -211,7 +199,7 @@
                     <i class="fa-solid fa-fire highlight"></i>
                     <div>
                         <h3>Молодежка</h3>
-                        <p>Суббота — <span class="highlight">17:00</span></p>
+                        <p>{{ info.date_saturday}}</span></p>
                     </div>
                 </div>
 
@@ -219,12 +207,12 @@
                     <i class="fa-solid fa-church highlight"></i>
                     <div>
                         <h3>Служение</h3>
-                        <p>Воскресенье — <span class="highlight">11:00</span></p>
+                        <p>{{ info.date_sunday }}</p>
                     </div>
                 </div>
             </div>
 
-            <p class="copyright">© 2023 Kościół Chwały. Kielce.</p>
+            <p class="copyright">{{ info.text_footer }}</p>
         </div>
     </footer>
 {% endblock %}

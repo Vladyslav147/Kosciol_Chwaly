@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import TextUpdate
 
-class UpdateForm(forms.ModelForm): # Лучше назвать UpdateForm, чтобы было понятно
+#Здесь мы решаем, какие именно поля из базы можно трогать админу. Это "фильтр".
+class UpdateForm(forms.ModelForm):
     class Meta:
         model = TextUpdate
-        fields = ['text_bible', 'text_about', 'text_footer', 'phone', 'date_saturday', 'date_sunday']
+        fields = ['text_bible', 'text_about', 'text_footer', 'phone', 'date_saturday', 'date_sunday']# какие поля по name  будем принимать из html а так же с какими полями работать из баз даных
 
-        
 class UserCreateForm(UserCreationForm):
+
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={

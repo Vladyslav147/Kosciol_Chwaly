@@ -97,8 +97,7 @@ def logout_view(request):
 
 @login_required
 def adminPanel(request):
-    # ищем и достаем данные со строки 1
-    obj, created = TextUpdate.objects.get_or_create(id=1)
+    obj, create = TextUpdate.objects.get_or_create(id=1)
 
     if request.method == 'POST':
         form = UpdateForm(request.POST, instance=obj)
@@ -106,7 +105,8 @@ def adminPanel(request):
             form.save()
             return redirect('Cosciol:index')
     else:
-        form = UpdateForm(instance=obj) #Возьми данные из obj и заполни ими поля формы".
+        form = UpdateForm(instance=obj)
+
     context = {
         'form': form
     }
