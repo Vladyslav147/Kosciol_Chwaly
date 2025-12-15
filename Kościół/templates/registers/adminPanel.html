@@ -6,55 +6,147 @@
 {% endblock %}
 
 {% block body %}
-    <div class="top-bar">
-        Панель администратора
+<script src="{% static 'js/adminPanel.js' %}"></script>
+
+<div class="admin-container">
+    <div class="card">
+        <h3>Приветствие</h3>
+        <p>Место из Писания</p>
+        <button onclick="openModal()" class="btn-edit">Изменить</button>
     </div>
 
-    <div class="editor-container">
-        
-        <div class="editor-header">
-            <h1>Редактирование текстов главной страницы</h1>
-            <p>Внесите изменения в текстовые блоки сайта и нажмите "Сохранить".</p>
-            <br>
-        </div>
+    <div class="card">
+        <h3>Адрес</h3>
+        <p>Текущий адрес церкви</p>
+        <button onclick="openAdress()" class="btn-edit">Изменить</button>
+    </div>
 
-        <form action="" method="POST">
+    <div class="card">
+        <h3>О нас</h3>
+        <p>Информация "О нас"</p>
+        <button onclick="openAbout_uss()" class="btn-edit">Изменить</button>
+    </div>
+
+    <div class="card">
+        <h3>Email</h3>
+        <p>Контактный Email</p>
+        <button onclick="openEmail()" class="btn-edit">Изменить</button>
+    </div>
+
+    <div class="card">
+        <h3>Расписание Встреч</h3>
+        <p>Расписание (Суббота / Воскресенье)</p>
+        <button onclick="openMeting()" class="btn-edit">Изменить</button>
+    </div>
+</div>
+
+
+<!-- Окно местописания -->
+<div id="TEXT" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Изменение Приветствие</h2>
+
+        <form method="POST">
             {% csrf_token %}
+            <input type="hidden" name="form_type" value="bible_form">
             
-            <div class="form-group">
-                <label for="bible_text">Начальный текст\место-писание из библии</label>
-                <textarea id="bible_text" name="text_bible">{{ form.text_bible.value|default:'' }}</textarea>
-            </div>
+            <label>Заголовок</label>
+            <input type="text" name="title_bible" value="{{ info.title_bible }}">
+            <label>Текст</label>
+            <textarea id="about_text" name="text_bible">{{ info.text_bible}}</textarea>
 
-            <div class="form-group">
-                <label for="about_text">Текст блока "О нас"</label>
-                <textarea id="about_text" name="text_about">{{ form.text_about.value|default:'' }}</textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="footer_text">Текст в футере (подвал сайта)</label>
-                <input type="text" id="footer_text" name="text_footer" value="{{ form.text_footer.value|default:'' }}">
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Номер телефона</label>
-                <input type="text" id="phone" name="phone" value="{{ form.phone.value|default:'' }}">
-            </div>
-
-            <div class="form-group">
-                <label for="date_saturday">Время: Субота</label>
-                <input type="text" id="date_saturday" name="date_saturday" value="{{ form.date_saturday.value|default:'' }}">
-            </div>
-
-            <div class="form-group">
-                <label for="date_sunday">Время: Воскресенье</label>
-                <input type="text" id="date_sunday" name="date_sunday" value="{{ form.date_sunday.value|default:'' }}">
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn-save">Сохранить изменения</button>
-            </div>
-
+            <button type="submit" class="btn-save">Сохранить</button>
         </form>
+
     </div>
+</div>
+
+
+<!-- Окно адрес -->
+<div id="adres" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeadress()">&times;</span>
+        <h2>Изменение адреса</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="adres_form">
+            
+            <label>Адрес</label>
+            <input type="text" name="text_adres" value="{{ info.text_adres}}">
+            <label>Ссылка на местоположение</label>
+            <input type="text" name="text_adres_link" value="{{ info.text_adres_link}}">
+            <label>Нормер телефона</label>
+            <input type="text" name="phone" value="{{ info.phone}}">
+
+            <button type="submit" class="btn-save">Сохранить</button>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- Окно о нас -->
+<div id="about_us" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="about_uss_clos()">&times;</span>
+        <h2>Изменение О нас</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="about_us_form">
+
+            <label>Первый абзац</label>
+            <textarea name="about_us_text1">{{ info.about_us_text1}}</textarea>
+            <label>Второй абзац</label>
+            <textarea name="about_us_text2">{{ info.about_us_text2}}</textarea>
+
+            <button type="submit" class="btn-save">Сохранить</button>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- Окно Email -->
+<div id="open_email" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="clos_Email()">&times;</span>
+        <h2>Изменение Email</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="Email_form">
+
+            <label>Ваш Email</label>
+            <input type="text" name="text_email" value="{{ info.text_email}}">
+
+            <button type="submit" class="btn-save">Сохранить</button>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- Окно meting schedule -->
+<div id="open_meting" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="clos_meting()">&times;</span>
+        <h2>Изменение встреч</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+           <input type="hidden" name="form_type" value="meting_form">
+
+            <label>Суббота</label>
+            <input type="text" name="meting_saturday" value="{{ info.meting_saturday}}">
+            <label>Воскресенье</label>
+            <input type="text" name="meting_sanday" value="{{ info.meting_sanday}}">
+
+            <button type="submit" class="btn-save">Сохранить</button>
+        </form>
+
+    </div>
+</div>
 {% endblock %}

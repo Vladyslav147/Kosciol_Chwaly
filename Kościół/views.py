@@ -16,7 +16,6 @@ TG_CHAT_ID = os.getenv('TG_CHAT_ID')
 
 
 
-
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
     # 2. КОРОБКА (Payload): Собираем данные для Телеграма в словарь.
@@ -57,17 +56,14 @@ def contact_view(request):
 
 
 def index(request):
-    # 1. Достаем ту же самую запись, что правим в админке (id=1)
-    # Используем get_or_create, чтобы сайт не сломался, если запись удалят
-    church_info, created = TextUpdate.objects.get_or_create(id=1)
+    info_index, create = TextUpdate.objects.get_or_create(id=1)
 
-    # 2. Создаем контекст
-    context = {
-        'info': church_info  # Мы назвали переменную 'info'
+    contex = {
+        'info_index': info_index
     }
 
     # 3. Передаем контекст в рендер
-    return render(request, 'main/index.html', context)
+    return render(request, 'main/index.html', contex)
 
 def logins(request):
     if request.method == 'POST':
@@ -97,22 +93,44 @@ def logout_view(request):
 
 @login_required
 def adminPanel(request):
-    obj, create = TextUpdate.objects.get_or_create(id=1)
+    info, create = TextUpdate.objects.get_or_create(id=1) # Достаем все данние из баз данних и ложым их как бы в переменную info все строки из этой модели будут в info
 
-    if request.method == 'POST':
-        form = UpdateForm(request.POST, instance=obj)
-        if form.is_valid():
-            form.save()
-            return redirect('Cosciol:index')
-    else:
-        form = UpdateForm(instance=obj)
+    if request.method == 'POST': 
+        form_type = request.POST.get('form_type') # Создаем переменную form_type  в которую помещаем все инпуты под названием form_type из html тоесть так оно сохраняет и то что в нем лежыт 
 
-    context = {
-        'form': form
+        if form_type == 'bible_form': # тут проверка если из form_type был найдет инпут и у него значение value= было равным bible_form то начинаем делать следущее
+            info.title_bible = request.POST.get('title_bible') #берем модель из быз даных info и ищем рядок title_bible ну и помещаем в него информацыию из инпута сайта инпут под названием title_bible
+            info.text_bible = request.POST.get('text_bible')
+            info.save()
+
+        elif form_type == 'adres_form':
+            info.text_adres = request.POST.get('text_adres')
+            info.phone = request.POST.get('phone')
+            info.text_adres_link = request.POST.get('text_adres_link')
+            info.save()
+
+        elif form_type == 'about_us_form':
+            info.about_us_text1 = request.POST.get('about_us_text1')
+            info.about_us_text2 = request.POST.get('about_us_text2')
+            info.save()
+        
+        elif form_type == 'Email_form':
+            info.text_email = request.POST.get('text_email')
+            info.save()
+
+        elif form_type == 'meting_form':
+            info.meting_saturday = request.POST.get('meting_saturday')
+            info.meting_sanday = request.POST.get('meting_sanday')
+            info.save()
+
+        return redirect('Cosciol:adminPanel')
+    
+    contex = {
+        'info': info
     }
-    return render(request, 'registers/adminPanel.html', context)
+    return render(request, 'registers/adminPanel.html', contex)
 
-
+    
 
 """
 def register(request):

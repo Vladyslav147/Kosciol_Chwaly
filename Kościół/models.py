@@ -2,19 +2,25 @@ from django.db import models
 
 # Create your models here.
 class TextUpdate(models.Model):
-    # Используем verbose_name, чтобы в админке было понятно, что это за поле
-    text_bible = models.TextField(verbose_name="Цитата из Библии")
-    text_about = models.TextField(verbose_name="Текст О нас")
+    # Окно описания
+    title_bible = models.TextField(verbose_name="Заголовок", default="Заголовок", blank=True)
+    text_bible = models.TextField(verbose_name="Текст", default="Текст", blank=True)
     
-    # Исправил опечатку fotur -> footer
-    text_footer = models.CharField(max_length=200, verbose_name="Текст в футере") 
-    
-    # ВАЖНО: CharField для телефона!
-    phone = models.CharField(max_length=20, verbose_name="Телефон") 
-    
-    date_saturday = models.CharField(max_length=50, verbose_name="Время Суббота")
-    date_sunday = models.CharField(max_length=50, verbose_name="Время Воскресенье")
+    # Окно адрес
+    text_adres = models.CharField(max_length=50, verbose_name="Адрес", default="Адрес", blank=True)
+    text_adres_link = models.CharField(max_length=200,verbose_name="Адрес_ccилка", default="Адрес_ccилка", blank=True)
+    phone = models.CharField(max_length=20, verbose_name="Телефон", default="+000000000", blank=True) 
 
-    # Чтобы в админке красиво называлось
+    # О нас
+    about_us_text1 = models.TextField(verbose_name="Первый абзац", default="Текст", blank=True)
+    about_us_text2 = models.TextField(verbose_name="Второй абзац", default="Текст", blank=True)
+    
+    # Окно Email
+    text_email = models.EmailField(default="example@email.com", blank=True)
+
+    # Окно meting schedule 
+    meting_saturday = models.CharField(max_length=50, verbose_name="Суббота", default="10:00", blank=True)
+    meting_sanday = models.CharField(max_length=50, verbose_name="Воскресенье", default="10:00", blank=True)
+
     def __str__(self):
         return "Настройки Контента Главной"

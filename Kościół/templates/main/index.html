@@ -23,19 +23,19 @@
             
             <div class="address-box">
                 <i class="fa-solid fa-location-dot highlight"></i>
-                <span>Kielce, ul. Warszawska 6</span>
+                <span>{{ info_index.text_adres}}</span>
             </div>
             
             <p style="margin-top: 20px; max-width: 500px; color: #a0a0a0;">
-                
-                <i>{{ info.text_bible }}</i>
+                <h1>{{ info_index.title_bible }}</h1>
+                <i>{{ info_index.text_bible }}</i>
             </p>
             
             <div class="cta-group">
                 <div class="social-icons">
-                    <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://t.me" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-                    <a href="tel:+48123456789"><i class="fa-solid fa-phone"></i></a>
+                    <a href="https://www.instagram.com/kosciol_chwaly_youth?igsh=cGdkZnBmdWh1ODVh" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://t.me/youthkielce" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="tel:{{ info_index.phone }}"><i class="fa-solid fa-phone"></i></a>
                 </div>
             </div>
         </div>
@@ -61,10 +61,10 @@
 
     <section class="about" id="about">
         <div class="about-content">
-            <h2 class="section-title">About <span class="highlight">Us</span></h2>
+            <h2 class="section-title">О <span class="highlight">Нас</span></h2>
             <div class="about-text-box">
                 <p>
-                    {{ info.text_about }}
+                    {{ info_index.about_us_text1 }} <br> <br>{{ info_index.about_us_text2 }}
                 </p>
             </div>
         </div>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Email</h3>
-                        <p>kosciel.chwaly@example.com</p>
+                        <p>{{ info_index.text_email}}</p>
                         <a href="mailto:kosciel.chwaly@example.com">Отправить письмо</a>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Phone</h3>
-                        <p>{{ info.phone }}</p>
+                        <p>{{ info_index.phone }}</p>
                         <a href="tel:{{ info.phone|cut:' ' }}">Позвонить нам</a>
                     </div>
                 </div>
@@ -161,8 +161,8 @@
                     </div>
                     <div class="info-text">
                         <h3>Location</h3>
-                        <p>Kielce, ul. Warszawska 6, Poland</p>
-                        <a href="https://maps.google.com/?q=Kielce,+ul.+Warszawska+6" target="_blank">Посмотреть на карте</a>
+                        <p>{{ info_index.text_adres}}</p>
+                        <a href="{{ info_index.text_adres_link }}" target="_blank">Посмотреть на карте</a>
                     </div>
                 </div>
             </div>
@@ -192,14 +192,14 @@
 
     <footer id="footer">
         <div class="footer-content">
-            <h2>Расписание <span class="highlight">Встреч</span></h2>
+            <h2>Расписание <span class="highlight">Служений</span></h2>
             
             <div class="schedule-box">
                 <div class="schedule-item">
                     <i class="fa-solid fa-fire highlight"></i>
                     <div>
-                        <h3>Молодежка</h3>
-                        <p>{{ info.date_saturday}}</span></p>
+                        <h3>Молодёжка</h3>
+                        <p>{{ info_index.meting_saturday}}</span></p>
                     </div>
                 </div>
 
@@ -207,7 +207,7 @@
                     <i class="fa-solid fa-church highlight"></i>
                     <div>
                         <h3>Служение</h3>
-                        <p>{{ info.date_sunday }}</p>
+                        <p>{{ info_index.meting_sanday }}</p>
                     </div>
                 </div>
             </div>

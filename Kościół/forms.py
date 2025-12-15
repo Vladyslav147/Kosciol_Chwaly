@@ -7,7 +7,7 @@ from .models import TextUpdate
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = TextUpdate
-        fields = ['text_bible', 'text_about', 'text_footer', 'phone', 'date_saturday', 'date_sunday']# какие поля по name  будем принимать из html а так же с какими полями работать из баз даных
+        fields = ['title_bible', 'text_bible', 'text_adres', 'about_us_text1', 'about_us_text2', 'text_email', 'meting_saturday', 'meting_sanday', 'phone', 'text_adres_link']# какие поля по name  будем принимать из html а так же с какими полями работать из баз даных
 
 class UserCreateForm(UserCreationForm):
 
