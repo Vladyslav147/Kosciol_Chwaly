@@ -123,6 +123,14 @@ def adminPanel(request):
             info.meting_sanday = request.POST.get('meting_sanday')
             info.save()
 
+        elif form_type == 'reg_status_form':
+            if request.POST.get('is_open') == 'on':
+                info.is_reg_open = True
+            else:
+                info.is_reg_open = False
+            info.text_register = request.POST.get('text_register')
+            info.save()
+
         return redirect('Cosciol:adminPanel')
     
     contex = {

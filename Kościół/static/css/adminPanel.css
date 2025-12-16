@@ -149,3 +149,68 @@
     margin: 0 auto;            /* Центрируем сам контейнер на странице */
     margin-top: 100px;
 }
+
+
+
+
+
+/* === ОСОБЕННАЯ КАРТОЧКА (Специальный стиль) === */
+
+.card.special-card {
+    border: 4px solid #d43737 !important; /* !important заставит рамку появиться принудительно */
+    background: linear-gradient(to bottom, #ffffff, #ffffff) !important; /* принудительный фон */
+    position: relative;
+}
+
+/* === РАСПОЛОЖЕНИЕ КНОПОК === */
+
+/* Контейнер для кнопок (делает их в ряд) */
+.btn-row {
+    display: flex;       /* Включаем режим "резинки" */
+    gap: 10px;           /* Расстояние между кнопками */
+    justify-content: center; /* Центрируем кнопки */
+    margin-top: 20px;
+}
+
+/* Общий стиль для кнопок в этой карточке */
+.btn-action {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;  /* Чуть меньше паддинг, чтобы две влезли */
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex: 1;             /* Кнопки будут растягиваться поровну */
+    display: flex;       /* Чтобы иконка и текст были ровно */
+    align-items: center;
+    justify-content: center;
+    gap: 8px;            /* Отступ иконки от текста */
+}
+
+/* Эффект нажатия (кнопка чуть пружинит) */
+.btn-action:active {
+    transform: scale(0.95);
+}
+
+/* === ЦВЕТА КНОПОК === */
+
+/* Золотая кнопка (Настройки) */
+.btn-gold {
+    background-color: #d4af37;
+    color: white;
+}
+.btn-gold:hover {
+    background-color: #b59020;
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Синяя кнопка (Анкета/Форма) */
+.btn-blue {
+    background-color: #3498db;
+    color: white;
+}
+.btn-blue:hover {
+    background-color: #2980b9;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}

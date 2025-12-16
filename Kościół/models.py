@@ -22,5 +22,7 @@ class TextUpdate(models.Model):
     meting_saturday = models.CharField(max_length=50, verbose_name="Суббота", default="10:00", blank=True)
     meting_sanday = models.CharField(max_length=50, verbose_name="Воскресенье", default="10:00", blank=True)
 
+    is_reg_open = models.BooleanField(default=False, verbose_name="Регестрация открыта")
+    text_register = models.TextField(verbose_name="Текст для регистрации",blank=True)
     def __str__(self):
         return "Настройки Контента Главной"
