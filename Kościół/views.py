@@ -1,4 +1,5 @@
 import os
+from django.contrib import messages
 from dotenv import load_dotenv
 import requests # для выхода в интернет
 from django.shortcuts import render
@@ -7,15 +8,16 @@ from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect, get_object_or_404 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 load_dotenv()
 
-from .models import TextUpdate
-from .forms import UpdateForm
+from .models import TextUpdate, UserRegistration
+from .forms import UserRegistrationForm
 TG_TOKEN = os.getenv('TG_TOKEN')
 TG_CHAT_ID = os.getenv('TG_CHAT_ID')
 
 
-
+# Вызов отправки данных на телеграм 
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
     # 2. КОРОБКА (Payload): Собираем данные для Телеграма в словарь.
@@ -28,7 +30,6 @@ def send_telegram(message):
         requests.post(url, data=payload)
     except Exception as error:
         print(f'Ошибка отправки в ТГ: {error}')
-
 def contact_view(request):
     if request.method == 'POST': 
         name = request.POST.get('name')
@@ -54,17 +55,27 @@ def contact_view(request):
     # Если это не POST запрос, просто кидаем на главную
     return redirect('Cosciol:index')
 
-
+# Вызов главной страницы
 def index(request):
     info_index, create = TextUpdate.objects.get_or_create(id=1)
 
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Вы успешно зарегистрированы!')
+            return redirect('Cosciol:index')
+    else:
+        form = UserRegistrationForm()
+
     contex = {
-        'info_index': info_index
+        'info_index': info_index,
+        'form': form
     }
 
-    # 3. Передаем контекст в рендер
     return render(request, 'main/index.html', contex)
 
+# Вызов входа админа на сайт 
 def logins(request):
     if request.method == 'POST':
         # 1. Получаем данные
@@ -91,8 +102,9 @@ def logout_view(request):
     logout(request)
     return redirect('Cosciol:index')
 
-@login_required
-def adminPanel(request):
+# Вызов страницы админ панели а так же всей ее логике
+@staff_member_required
+def PageadminPanel(request):
     info, create = TextUpdate.objects.get_or_create(id=1) # Достаем все данние из баз данних и ложым их как бы в переменную info все строки из этой модели будут в info
 
     if request.method == 'POST': 
@@ -138,19 +150,38 @@ def adminPanel(request):
     }
     return render(request, 'registers/adminPanel.html', contex)
 
-    
+# Вызов страницы зарегистрированных или же самой формы
+@staff_member_required
+def PageformUsers(request):
+    users = UserRegistration.objects.all().order_by('-created_at')# Достать всех пользователей, order_by('-created_at') = Отсортируй по дате создания в обратном порядке
+    #users_integer = UserRegistration.objects.count() # Подсчёт сколько всего записей в базе данных, запрос идет SELECT COUNT(*) FROM app_userregistration; и счетает за секунду сколько было сделано записей в базе данных 
+    search_query = request.GET.get('q') # Принимает из html то что пользователь написал в поиск 'q' = это name="q" в <form>
 
-"""
-def register(request):
+    if search_query: 
+        users = users.filter(full_name__icontains=search_query)
+
+    users_integer = users.count() 
+
+    contex = {
+        'users_integer': users_integer,
+        'users': users,
+        'search_query': search_query
+    }
+    return render(request, 'registers/FormRegister.html', contex)
+
+# Вызов удаление конкретного пользователя
+@staff_member_required
+def user_delete(request, id):
+    user = get_object_or_404(UserRegistration, id=id)
     if request.method == 'POST':
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('Cosciol:index')
-    else:
-        # Если это GET-запрос (просто зашли на страницу), создаем пустую форму
-        form = UserCreateForm()
-    return render(request, 'registers/register.html', {'form': form})
+        user.delete()
+        return redirect('Cosciol:page_formUser')
+    return redirect('Cosciol:formUser')
 
-"""
+# Вызов очищение всх пользователей
+@staff_member_required  
+def delete_all_user(request):
+    if request.method == 'POST':
+        UserRegistration.objects.all().delete()
+        
+    return redirect('Cosciol:page_formUser')

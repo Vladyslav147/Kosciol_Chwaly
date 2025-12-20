@@ -21,6 +21,7 @@ function clos_meting() {document.getElementById('open_meting').style.display = '
 
 function openRegister() {document.getElementById('open_registers').style.display = 'block';}
 function clos_registers() {document.getElementById('open_registers').style.display = 'none';}
+
 // Закрыть, если кликнули мимо окна (по темному фону)
 window.onclick = function(event) {
         // Если кликнули по элементу с классом 'modal-overlay' (темный фон)

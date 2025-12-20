@@ -1,12 +1,9 @@
 {% extends "main/base.html" %}
 {% load static %}
 
-
-
 {% block title %}
     Kościół Chwały | Kielce
 {% endblock title %}
-
  
 {% block extra_css %}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,6 +13,7 @@
 
 
 {% block body %}
+<script src="{% static 'js/FormRegister.js'%}"></script>
 
     <section class="hero" id="home">
         <div class="hero-content">
@@ -59,17 +57,27 @@
         </div>
     </section>
 
+
+    
     {% if info_index.is_reg_open %} 
         <div class="registers_div">
-            <a href="#" class="btn-submit btn-gold"> 
-                🔥 Регистрация открыта!
-            </a>
+            <button onclick="OpenFormRegister()" class="btn-submit btn-gold">🔥 Регистрация открыта!</button>
             <p>
                 {{ info_index.text_register|default:"Регистрация на предстоящее событие уже доступна!" }}
             </p>
         </div>
     {% endif %}
  
+
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert("{{ message }}");
+            {% endfor %}
+        </script>
+    {% endif %}
+
+    
     <section class="about" id="about">
         <div class="about-content">
             <h2 class="section-title">О <span class="highlight">Нас</span></h2>
@@ -226,4 +234,30 @@
             <p class="copyright">{{ info.text_footer }}</p>
         </div>
     </footer>
+
+    <!-- Окно Регистрации -->
+    <div id="OpenUserRegister" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeUserRegister()">&times;</span>
+            <h2>Изменение адреса</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+                
+                <label>Имя Фамилия</label>
+                <input type="text" name="full_name" required>
+                <label>Номер телефона</label>
+                <input type="text" name="user_phone" required>
+                <label>Город</label>
+                <input type="text" name="city" required>
+                <label>Возраст</label>
+                <input type="text" name="age" required>
+                <label>Малый коментарий</label>
+                <input type="text" name="text_comment">
+
+                <button type="submit" class="btn-save">Зарегистрироватся</button>
+            </form>
+
+        </div>
+    </div>
 {% endblock %}

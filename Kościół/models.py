@@ -26,3 +26,11 @@ class TextUpdate(models.Model):
     text_register = models.TextField(verbose_name="Текст для регистрации",blank=True)
     def __str__(self):
         return "Настройки Контента Главной"
+
+class UserRegistration(models.Model):
+    full_name = models.CharField(max_length=60)
+    user_phone = models.CharField(max_length=20)
+    city = models.CharField(max_length=50)
+    age = models.PositiveSmallIntegerField(verbose_name="Возраст")
+    text_comment = models.CharField(max_length=50, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата регистрации")

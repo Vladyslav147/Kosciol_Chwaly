@@ -1,13 +1,20 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import TextUpdate
+from .models import TextUpdate, UserRegistration
 
 #Здесь мы решаем, какие именно поля из базы можно трогать админу. Это "фильтр".
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = TextUpdate
         fields = ['title_bible', 'text_bible', 'text_adres', 'about_us_text1', 'about_us_text2', 'text_email', 'meting_saturday', 'meting_sanday', 'phone', 'text_adres_link']# какие поля по name  будем принимать из html а так же с какими полями работать из баз даных
+
+
+class UserRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = UserRegistration
+        fields = ['full_name', 'user_phone', 'city', 'age', 'text_comment']
+
 
 class UserCreateForm(UserCreationForm):
 

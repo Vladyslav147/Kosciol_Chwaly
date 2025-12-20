@@ -1,13 +1,118 @@
 {% extends "main/base.html" %}
-{% loat static %}
+{% load static %}
 
 {% block title %}
     Форма
 {% endblock %}
 
 {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/FormRegister.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block body %}
+ 
+    <div class="main-container">
+        
+        <div class="top-bar">
+            
+            <div class="title-box">
+                <h1>Участники <span class="highlight">События</span></h1>
+                <span class="badge-count">{{ users_integer }} чел.</span>
+            </div>
 
+            <!-- Форма для поиска участника по имени фамилии -->
+            <form class="search-box" action="" name="q" method="get">
+                <input type="text" name="q" placeholder="Поиск участника...">
+                <button type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+
+            <!-- Верхняя кнопка печатать и сброс и назад-->
+            <div class="actions-box">
+                <button class="btn-action btn-print" onclick="window.print()">
+                    <i class="fa-solid fa-print"></i> <span class="btn-text">Печать</span>
+                </button>
+
+                <form action="{% url 'Cosciol:delete_all_user' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn-action btn-danger-glow" title="Удалить всех участников">
+                        <i class="fa-solid fa-triangle-exclamation"></i> <span class="btn-text">Сброс</span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+        
+        <div class="table-card">
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Дата</th>
+                            <th>Имя и Фамилия</th>
+                            <th>Контакты</th>
+                            <th>Город</th>
+                            <th>Возраст</th>
+                            <th class="text-center">Удалить</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        {% for user in users%}
+                        <tr>
+                            <td class="id-col">{{ forloop.counter }}</td>
+                            <td class="date-col">
+                                {{ user.created_at|date:"d M"}} <br> <span>{{ user.created_at|date:"H:i"}}</span>
+                            </td>
+
+                            <td class="user-info">
+                                <div class="avatar-circle">{{ user.full_name|slice:"1"}}</div>
+                                <div>
+                                    <span class="name">{{ user.full_name}}</span>
+
+                                    {% if user.text_comment%}
+                                    <span class="note">{{ user.text_comment}}</span>
+                                    {% endif%}
+                                </div>
+                            </td>
+
+                            <td>
+                                <a href="{{ user.user_phone }}" class="phone-link">
+                                    <i class="fa-solid fa-phone"></i> {{ user.user_phone}}
+                                </a>
+                            </td>
+
+                            <td>{{ user.city }}</td>
+
+                            <td>{{ user.age }}</td>
+
+                            <form action="{% url 'Cosciol:Delet_user' user.id %}" method="post">
+                                {% csrf_token %}
+                                <td class="text-center">
+                                    <button class="btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </form>
+                        </tr>
+                    {% endfor%}
+                    </tbody>
+
+
+                </table>
+            </div>
+            
+            <div class="table-footer">
+                Всего регистраций: {{ users_integer }}
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

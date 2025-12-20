@@ -1,0 +1,344 @@
+/* === БАЗОВЫЕ НАСТРОЙКИ (Dark Mode) === */
+:root {
+    --bg-dark: #0F0F0F;       /* Фон сайта */
+    --card-dark: #1A1A1A;     /* Фон карточек */
+    --accent-cyan: #00E0FF;   /* Голубой акцент */
+    --accent-green: #2ecc71;  /* Зеленый для печати */
+    --text-white: #FFFFFF;
+    --text-grey: #A0A0A0;
+    --danger-red: #FF4757;    /* Красный для удаления */
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    margin-top: 120px;
+}
+
+/* === ШАПКА (TOP BAR) === */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+    flex-wrap: wrap; /* Чтобы на телефоне переносилось */
+}
+
+/* Заголовок */
+.title-box h1 {
+    font-size: 2.2rem;
+    margin: 0;
+    font-weight: 700;
+}
+.title-box .highlight {
+    color: var(--accent-cyan);
+}
+.badge-count {
+    background-color: rgba(0, 224, 255, 0.1);
+    color: var(--accent-cyan);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-left: 10px;
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    vertical-align: middle;
+}
+
+/* === ПОИСК (Центральный блок) === */
+.search-box {
+    position: relative;
+    flex-grow: 1;
+    max-width: 400px;
+    margin: 0 10px;
+}
+
+.search-box input {
+    width: 100%;
+    background-color: var(--card-dark);
+    border: 1px solid #333;
+    color: var(--text-white);
+    padding: 12px 45px 12px 20px;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.search-box input:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(0, 224, 255, 0.15);
+}
+
+.search-box input::placeholder {
+    color: #555;
+}
+
+.search-box button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #666;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-box button:hover {
+    color: var(--accent-cyan);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* === КНОПКИ ДЕЙСТВИЙ (Справа) === */
+.actions-box {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Общий стиль кнопок */
+.btn-action {
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: 2px solid transparent; /* Резервируем место под рамку */
+}
+
+/* Кнопка Назад */
+.btn-back {
+    background-color: var(--card-dark);
+    color: var(--text-white);
+    border-color: #333;
+}
+.btn-back:hover {
+    background-color: #252525;
+    border-color: var(--text-white);
+}
+
+/* Кнопка Сброс (Красная) */
+.btn-danger-glow {
+    background: transparent;
+    border-color: var(--danger-red);
+    color: var(--danger-red);
+}
+.btn-danger-glow:hover {
+    background-color: var(--danger-red);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+}
+
+/* Кнопка Печать (Зеленая) */
+.btn-print {
+    background: transparent;
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+.btn-print:hover {
+    background-color: var(--accent-green);
+    color: white;
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+}
+
+/* === ТАБЛИЦА === */
+.table-card {
+    background-color: var(--card-dark);
+    border-radius: 20px;
+    padding: 5px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+    overflow: hidden;
+}
+
+.table-scroll {
+    overflow-x: auto; /* ГЛАВНОЕ ДЛЯ ТЕЛЕФОНА: позволяет скроллить таблицу вбок */
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px; /* Чтобы таблица не сжималась в кашу, а уходила в скролл */
+}
+
+/* Заголовки */
+thead th {
+    background-color: #222;
+    color: var(--text-grey);
+    text-align: left;
+    padding: 20px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #333;
+}
+
+/* Строки */
+tbody tr {
+    transition: 0.2s;
+    border-bottom: 1px solid #2a2a2a;
+}
+tbody tr:hover {
+    background-color: #252525;
+}
+
+tbody td {
+    padding: 18px 20px;
+    vertical-align: middle;
+}
+
+/* Колонки */
+.id-col { color: var(--text-grey); font-weight: bold; }
+.date-col { font-weight: 600; color: var(--text-white); line-height: 1.2; }
+.date-col span { font-size: 0.8rem; color: var(--text-grey); font-weight: 400; }
+
+/* Пользователь + Аватар */
+.user-info { display: flex; align-items: center; gap: 15px; }
+.avatar-circle {
+    width: 42px; height: 42px;
+    background-color: var(--accent-cyan);
+    color: #000;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1.2rem;
+    flex-shrink: 0;
+}
+.avatar-circle.color-2 { background-color: #A29BFE; }
+.avatar-circle.color-3 { background-color: #FFEAA7; }
+.user-info .name { display: block; font-weight: 600; font-size: 1rem; }
+.user-info .note { display: block; font-size: 0.8rem; color: var(--text-grey); margin-top: 3px; max-width: 250px; }
+
+/* Телефон */
+.phone-link {
+    color: var(--text-white);
+    text-decoration: none;
+    background-color: #333;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+.phone-link:hover { background-color: var(--accent-cyan); color: #000; }
+
+/* Кнопка Удалить */
+.btn-delete {
+    background-color: transparent;
+    border: 1px solid #444;
+    color: #666;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+}
+.btn-delete:hover {
+    background-color: var(--danger-red);
+    border-color: var(--danger-red);
+    color: white;
+    transform: scale(1.1);
+}
+
+.text-center { text-align: center; }
+.table-footer { padding: 15px 20px; background-color: #222; color: var(--text-grey); font-size: 0.9rem; text-align: right; border-top: 1px solid #333; }
+
+
+/* ========================================= */
+/* === МОБИЛЬНАЯ АДАПТАЦИЯ (ТЕЛЕФОН) === */
+/* ========================================= */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 20px 10px; /* Уменьшаем отступы по краям */
+    }
+
+    /* Шапка выстраивается в столбик */
+    .top-bar {
+        flex-direction: column; 
+        align-items: stretch; /* Растягиваем элементы на всю ширину */
+        gap: 15px;
+    }
+
+    .title-box {
+        text-align: center; /* Центрируем заголовок */
+    }
+    
+    .title-box h1 {
+        font-size: 1.8rem;
+    }
+
+    .search-box {
+        max-width: 100%; /* Поиск на всю ширину */
+        margin: 0;
+    }
+
+    .actions-box {
+        justify-content: center; /* Кнопки по центру */
+    }
+    
+    /* Уменьшаем текст кнопок или скрываем его, если не влезает */
+    .btn-action {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+    
+    /* Таблица скроллится вбок автоматически благодаря .table-scroll */
+    th, td {
+        padding: 12px 10px; /* Чуть меньше отступы в ячейках */
+    }
+}
+
+
+/* ========================================= */
+/* === СТИЛИ ДЛЯ ПЕЧАТИ (ПРИНТЕР) === */
+/* ========================================= */
+@media print {
+    body { background-color: white !important; color: black !important; }
+    
+    /* Скрываем лишнее */
+    .actions-box, .search-box, .table-footer, .avatar-circle, .btn-delete, .top-bar .btn-back { display: none !important; }
+
+    /* Убираем стили контейнеров */
+    .main-container, .table-card {
+        box-shadow: none !important; border: none !important; padding: 0 !important; margin: 0 !important; width: 100% !important; max-width: 100% !important; background-color: white !important;
+    }
+
+    /* Таблица для бумаги */
+    table { border: 1px solid #000 !important; width: 100% !important; color: black !important; min-width: 0 !important; }
+    thead th { background-color: #eee !important; color: black !important; border: 1px solid #000 !important; }
+    tbody td { border: 1px solid #000 !important; color: black !important; }
+    tbody tr { border-bottom: 1px solid #000 !important; }
+
+    /* Делаем ссылки черными */
+    .phone-link, .date-col, .name, .date-col span, .note { color: black !important; background: none !important; padding: 0 !important; }
+    .title-box .highlight { color: black !important; }
+    .badge-count { border: 1px solid black; color: black; }
+}
