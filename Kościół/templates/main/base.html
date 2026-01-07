@@ -46,13 +46,17 @@
 
 
             {% if user.is_authenticated %}
-                {% if user.is_staff %}
+                {% if user.is_authenticated and user.is_staff %}
                     <h3 class="Hello">
                         Приветствую <br> <span class="user-name">{{ user.username }}</span>
                     </h3>
-                    <a href="{% url 'Cosciol:logout'%}" class="mobile-active">
-                        <i class="fa-solid fa-right-to-bracket"></i> Выйти
-                    </a>
+                    
+                    <form action="{% url 'Cosciol:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="mobile-active" style="background: none; border: none; color: inherit; cursor: pointer; padding: 0; font: inherit;">
+                            <i class="fa-solid fa-right-to-bracket"></i> Выйти
+                        </button>
+                    </form>
                 {% endif %}
             {% else %}
                 <a href="{% url 'Cosciol:logins'%}">

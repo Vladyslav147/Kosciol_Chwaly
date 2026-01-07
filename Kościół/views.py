@@ -11,6 +11,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 load_dotenv()
 
+# для CBV
+from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import CreateView
+from django.contrib.auth.views import LoginView, LogoutView
+
 from .models import TextUpdate, UserRegistration
 from .forms import UserRegistrationForm
 TG_TOKEN = os.getenv('TG_TOKEN')
@@ -56,132 +64,144 @@ def contact_view(request):
     return redirect('Cosciol:index')
 
 # Вызов главной страницы
-def index(request):
-    info_index, create = TextUpdate.objects.get_or_create(id=1)
+class index(CreateView):
+    model = UserRegistration
+    form_class = UserRegistrationForm
+    template_name = 'main/index.html'
+    success_url = reverse_lazy('Cosciol:index')
 
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы успешно зарегистрированы!')
-            return redirect('Cosciol:index')
-    else:
-        form = UserRegistrationForm()
+    # 1. Добавляем данные info_index в контекст (аналог contex в функции)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        info_index, create = TextUpdate.objects.get_or_create(id=1)
+        context['info_index'] = info_index
+        return context
 
-    contex = {
-        'info_index': info_index,
-        'form': form
-    }
-
-    return render(request, 'main/index.html', contex)
+    # 2. Аналог if form.is_valid(): (что делать при успехе)
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Вы успешно зарегистрированы!')
+        return response
 
 # Вызов входа админа на сайт 
-def logins(request):
-    if request.method == 'POST':
-        # 1. Получаем данные
-        username_data = request.POST.get('username') #Ложым данные зи сайта в переменные 
-        password_data = request.POST.get('password')
-        # 2. Проверяем логин и пароль
-        user = authenticate(request, username=username_data, password=password_data) #Тут проверка на то что если ли такой админ в баз дане делает это authenticate
+class logins(LoginView):
+    template_name = 'registers/login.html'
+    next_page = reverse_lazy('Cosciol:index')
 
-        if user is not None:#если ты не пустой то проходим дальше если пустой тоесть ты None то проверка не будет пройдена 
-            if user.is_staff:  # Проверяем, является ли он Персоналом (Админом)
-                # Если Админ — пускаем
-                login(request, user)
-                return redirect('Cosciol:index') 
-            else:
-                # Если пароль верный, но он ОБЫЧНЫЙ юзер — не пускаем
-                messages.error(request, 'Доступ разрешен только администраторам')
+    def form_valid(self, form):
+        user = form.get_user()
+
+        if user.is_superuser:
+            return super().form_valid(form)
         else:
-            # 4. Если пароль вообще неверный
-            messages.error(request, 'Неверное имя пользователя или пароль')
-    return render(request, 'registers/login.html')
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('Cosciol:index')
+            messages.error(self.request, 'Доступ разрешен только администраторам')
+            return self.form_invalid(form)
+        
+    def form_invalid(self, form):
+        messages.error(self.request, 'Неверное имя пользователя или пароль')
+        return super().form_invalid(form)
+    
+class logout_view(LogoutView):
+    next_page = reverse_lazy('Cosciol:index')
 
 # Вызов страницы админ панели а так же всей ее логике
-@staff_member_required
-def PageadminPanel(request):
-    info, create = TextUpdate.objects.get_or_create(id=1) # Достаем все данние из баз данних и ложым их как бы в переменную info все строки из этой модели будут в info
+class PageadminPanel(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    template_name = 'registers/adminPanel.html'
+    success_url = reverse_lazy('Cosciol:adminPanel')
+    context_object_name = 'info'
+    fields = '__all__'
 
-    if request.method == 'POST': 
-        form_type = request.POST.get('form_type') # Создаем переменную form_type  в которую помещаем все инпуты под названием form_type из html тоесть так оно сохраняет и то что в нем лежыт 
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+    def get_object(self, queryset = None):
+        obj, created = TextUpdate.objects.get_or_create(id=1)
+        return obj
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form_type = request.POST.get('form_type')
+        info = self.object
 
-        if form_type == 'bible_form': # тут проверка если из form_type был найдет инпут и у него значение value= было равным bible_form то начинаем делать следущее
-            info.title_bible = request.POST.get('title_bible') #берем модель из быз даных info и ищем рядок title_bible ну и помещаем в него информацыию из инпута сайта инпут под названием title_bible
+        if form_type == 'bible_form':
+            info.title_bible = request.POST.get('title_bible')
             info.text_bible = request.POST.get('text_bible')
-            info.save()
 
         elif form_type == 'adres_form':
             info.text_adres = request.POST.get('text_adres')
-            info.phone = request.POST.get('phone')
             info.text_adres_link = request.POST.get('text_adres_link')
-            info.save()
-
+            info.phone = request.POST.get('phone')
+        
         elif form_type == 'about_us_form':
             info.about_us_text1 = request.POST.get('about_us_text1')
             info.about_us_text2 = request.POST.get('about_us_text2')
-            info.save()
-        
+
         elif form_type == 'Email_form':
             info.text_email = request.POST.get('text_email')
-            info.save()
-
+        
         elif form_type == 'meting_form':
             info.meting_saturday = request.POST.get('meting_saturday')
             info.meting_sanday = request.POST.get('meting_sanday')
-            info.save()
-
+        
         elif form_type == 'reg_status_form':
-            if request.POST.get('is_open') == 'on':
-                info.is_reg_open = True
-            else:
-                info.is_reg_open = False
+            info.is_reg_open = request.POST.get('is_open') == 'on'
             info.text_register = request.POST.get('text_register')
-            info.save()
-
-        return redirect('Cosciol:adminPanel')
-    
-    contex = {
-        'info': info
-    }
-    return render(request, 'registers/adminPanel.html', contex)
+        
+        info.save()
+        return redirect(self.success_url)
 
 # Вызов страницы зарегистрированных или же самой формы
-@staff_member_required
-def PageformUsers(request):
-    users = UserRegistration.objects.all().order_by('-created_at')# Достать всех пользователей, order_by('-created_at') = Отсортируй по дате создания в обратном порядке
-    #users_integer = UserRegistration.objects.count() # Подсчёт сколько всего записей в базе данных, запрос идет SELECT COUNT(*) FROM app_userregistration; и счетает за секунду сколько было сделано записей в базе данных 
-    search_query = request.GET.get('q') # Принимает из html то что пользователь написал в поиск 'q' = это name="q" в <form>
+class PageFormUser(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = UserRegistration
+    template_name = 'registers/FormRegister.html'
+    success_url = reverse_lazy('Cosciol:adminPanel')
+    context_object_name = 'users'
 
-    if search_query: 
-        users = users.filter(full_name__icontains=search_query)
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+    def get_queryset(self):
+        queryset = UserRegistration.objects.all().order_by('-created_at')
+        # Получаем запрос из поиска (из URL параметров ?q=...)
+        search_query = self.request.GET.get('q')
 
-    users_integer = users.count() 
+        if search_query: 
+            queryset = queryset.filter(full_name__icontains=search_query)
 
-    contex = {
-        'users_integer': users_integer,
-        'users': users,
-        'search_query': search_query
-    }
-    return render(request, 'registers/FormRegister.html', contex)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        # Получаем стандартный контекст (где уже лежит наш список users)
+        context = super().get_context_data(**kwargs)
+
+        # Добавляем поисковый запрос обратно в контекст (чтобы он не исчезал из поля поиска)
+        context['search_query'] = self.request.GET.get('q', '')
+
+        # Добавляем количество найденных записей
+        # Мы берем его прямо из отфильтрованного списка
+        context['users_integer'] = self.get_queryset().count()
+        
+        return context
 
 # Вызов удаление конкретного пользователя
-@staff_member_required
-def user_delete(request, id):
-    user = get_object_or_404(UserRegistration, id=id)
-    if request.method == 'POST':
-        user.delete()
-        return redirect('Cosciol:page_formUser')
-    return redirect('Cosciol:formUser')
+class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = UserRegistration
+    success_url = reverse_lazy('Cosciol:page_formUser')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
 # Вызов очищение всх пользователей
-@staff_member_required  
-def delete_all_user(request):
-    if request.method == 'POST':
+class delete_all_user(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+
+    success_url = reverse_lazy('Cosciol:page_formUser')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+    def post(self, request, *args, **kwargs):
         UserRegistration.objects.all().delete()
-        
-    return redirect('Cosciol:page_formUser')
+        return redirect(self.success_url)

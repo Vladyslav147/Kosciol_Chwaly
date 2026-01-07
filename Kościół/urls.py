@@ -4,16 +4,16 @@ app_name = 'Cosciol'
 
 
 urlpatterns = [
-    path('', views.index, name = 'index'),
-    path('login/', views.logins, name='logins'),
-    path('logout/', views.logout_view, name='logout'),
+    path('', views.index.as_view(), name = 'index'),
+    path('login/', views.logins.as_view(), name='logins'),
+    path('logout/', views.logout_view.as_view(), name='logout'),
     path('contact/', views.contact_view, name='contact'),
     
-    path('adminPanel/', views.PageadminPanel, name="adminPanel"),
-    path('adminPanel/form/', views.PageformUsers, name='page_formUser'),
+    path('adminPanel/', views.PageadminPanel.as_view(), name="adminPanel"),
+    path('adminPanel/form/', views.PageFormUser.as_view(), name='page_formUser'),
 
-    path('delete/<int:id>', views.user_delete, name='Delet_user'),
-    path('delete/', views.delete_all_user, name='delete_all_user'),
+    path('delete/<int:pk>', views.UserDeleteView.as_view(), name='Delet_user'),
+    path('delete/', views.delete_all_user.as_view(), name='delete_all_user'),
 ]
 
 
